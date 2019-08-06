@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import dummyStore from './dummy-store';
+import {Route, Link} from 'react-router-dom';
+import FolderList from './FolderList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+class App extends Component {
+
+  state = {
+    notes: [],
+    folders: []
+};
+
+componentDidMount() {
+  // fake date loading from API call
+  setTimeout(() => this.setState(dummyStore), 600);
+}
+
+
+render(){
+  const {notes, folders} = this.state;
+  var stuff = notes[0];
+ // console.log(stuff.id);
+  //console.log(folders);
+  return(
+    <div className='App'>
+<Route
+           exact path='/'
+           render={(props) => <FolderList{...props} folders={folders} />}
+          />
+      
+      </div>
   );
+
+
+}
 }
 
 export default App;
+
