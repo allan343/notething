@@ -3,6 +3,7 @@ import dummyStore from './dummy-store';
 import {Route, Link} from 'react-router-dom';
 import FolderList from './FolderList';
 import Notelist from './Notelist';
+import NotePage from './NotePage';
 import {getNotesForFolder, findNote, findFolder} from './notes-helpers';
 
 
@@ -50,7 +51,23 @@ render(){
             }
           />
 
-          
+
+<Route
+           path='/note/:noteId'
+           render={(routeProps) => {
+
+            const {noteId} = routeProps.match.params;
+            const note = findNote(
+              notes,
+              noteId
+          );
+          console.log("note is "+note);
+          return(
+             <NotePage{...routeProps}  note={note} />
+          );
+            }
+            }
+          />
           
       </main>
       </div>
