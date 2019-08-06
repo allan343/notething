@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import dummyStore from './dummy-store';
 import {Route, Link} from 'react-router-dom';
 import FolderList from './FolderList';
+import Notelist from './Notelist';
+import {getNotesForFolder, findNote, findFolder} from './notes-helpers';
+
 
 
 class App extends Component {
@@ -19,17 +22,39 @@ componentDidMount() {
 
 render(){
   const {notes, folders} = this.state;
-  var stuff = notes[0];
- // console.log(stuff.id);
-  //console.log(folders);
+  
+
   return(
     <div className='App'>
-<Route
+       <main>
+       
+          <Route
            exact path='/'
            render={(props) => <FolderList{...props} folders={folders} />}
           />
-      
+
+
+           <Route
+           path='/folder/:folderId'
+           render={(routeProps) => {
+
+            const {folderId} = routeProps.match.params;
+            const notesForFolder = getNotesForFolder(
+              notes,
+              folderId
+          );
+          return(
+             <Notelist{...routeProps}  folders={folders} notes={notesForFolder} />
+          );
+            }
+            }
+          />
+
+          
+          
+      </main>
       </div>
+      
   );
 
 
